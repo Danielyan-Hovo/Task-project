@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import Homepage from "./Components/Homepage";
+import Menu from "./Components/Menu";
+import {useEffect, useState} from "react";
+import Trending from "./Components/Trending";
+import cover from './assets/FeaturedCoverImage.png'
 
 function App() {
+    let menu=['Search','Home','TV Shows','Movies','Genres','Watch Leter']
+    const [tending,setTending]=useState([]);
+    useEffect(()=>{
+        fetch('http://localhost:3000/data.json').then((resp)=>
+            resp.json()).then(json=>{setTending(json.TendingNow)
+            });
+    },[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <img className='responsive' src={cover}/>
+        <Homepage/>
+        <Menu items={menu}/>
+        <Trending items={tending}/>
+
     </div>
   );
 }
